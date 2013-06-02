@@ -11,7 +11,7 @@ Install it first (I assume you have
 ```
 npm install aws-sdk
 npm install optimist
-git clone git@github.com:yegor256/dynamo-archive.git
+git clone https://github.com/yegor256/dynamo-archive.git
 ```
 
 Create a user in [Amazon IAM](http://aws.amazon.com/iam/)
