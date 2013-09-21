@@ -11,6 +11,7 @@ Install it first (I assume you have
 ```
 npm install aws-sdk
 npm install optimist
+npm install sleep
 git clone git@github.com:yegor256/dynamo-archive.git
 ```
 

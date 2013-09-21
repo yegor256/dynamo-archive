@@ -17,12 +17,15 @@ var argv = require('optimist')
     .usage('Archives Dynamo DB table to standard output in JSON\nUsage: $0 [options] > my-table.csv')
     .demand(['key', 'secret', 'table'])
     .default('region', 'us-east-1')
+    .default('rate', '100')
     .describe('key', 'Amazon IAM access key (20 symbols)')
     .describe('secret', 'Amazon IAM secret key (40 symbols)')
     .describe('table', 'Comma-separated list of Dynamo DB tables to archive')
     .describe('region', 'Amazon region, e.g. "us-east-1", "us-west-1", "eu-west-1", etc.')
+    .describe('rate', 'Maximum percentage of table read capacity allowed to consume')
     .argv;
 
+var sleep = require('sleep');
 var AWS = require('aws-sdk');
 AWS.config.update(
     {
@@ -33,11 +36,7 @@ AWS.config.update(
 );
 
 var dynamo = new AWS.DynamoDB();
-var params = {
-    TableName: argv.table,
-    ReturnConsumedCapacity: 'NONE',
-};
-while (true) {
+var scan = function(start, msecPerItem, done, params) {
     dynamo.scan(
         params,
         function (err, data) {
@@ -45,15 +44,36 @@ while (true) {
                 console.log('Error: ' + err);
                 process.exit(1);
             }
-            params['ExclusiveStartKey'] = data['LastEvaluatedKey'];
-            for (var idx = 0; idx < data['Items'].length; idx++) {
-                var item = data['Items'][idx];
-                process.stdout.write(JSON.stringify(item));
+            for (var idx = 0; idx < data.Items.length; idx++) {
+                process.stdout.write(JSON.stringify(data.Items[idx]));
                 process.stdout.write("\n");
+            }
+            var expected = start + msecPerItem * (done + data.Items.length);
+            if (expected > Date.now()) {
+                sleep.usleep((expected - Date.now()) * 1000);
+            }
+            if (data.LastEvaluatedKey) {
+                params.ExclusiveStartKey = data.LastEvaluatedKey;
+                scan(start, msecPerItem, done + data.Items.length, params);
             }
         }
     );
-    if (params['ExclusiveStartKey'] == null) {
-        break;
+};
+dynamo.describeTable(
+    {
+        TableName: argv.table
+    },
+    function (err, data) {
+        var quota = data.Table.ProvisionedThroughput.ReadCapacityUnits;
+        scan(
+            Date.now(),
+            Math.round(1000 / quota / (argv.rate / 100)),
+            0,
+            {
+                TableName: argv.table,
+                ReturnConsumedCapacity: 'NONE',
+                Limit: quota
+            }
+        );
     }
-}
+);
