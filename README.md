@@ -1,8 +1,8 @@
 ## Archive and Restore AWS Dynamo DB Table
 
-This is a simple Node.js script that archives an entire
+There are two simple Node.js scripts that archive and restore an entire
 [AWS Dynamo DB](http://aws.amazon.com/dynamodb/)
-table to console in JSON format.
+table in JSON format.
 
 Install it first (I assume you have
 [node.js](http://nodejs.org/) and
@@ -38,7 +38,7 @@ Run it first without arguments and read the output:
 node dynamo-archive.js
 ```
 
-You can also restore the table from a JSON file:
+To restore a table from a JSON file run:
 
 ```
 node dynamo-restore.js
