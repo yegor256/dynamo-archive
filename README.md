@@ -1,4 +1,4 @@
-# AWS Dynamo DB table archiver
+## Archive AWS Dynamo DB table
 
 This is a simple Node.js script that archives an entire
 [AWS Dynamo DB](http://aws.amazon.com/dynamodb/)
@@ -9,9 +9,7 @@ Install it first (I assume you have
 [npm](https://npmjs.org/doc/install.html) installed already):
 
 ```
-npm install aws-sdk
-npm install optimist
-npm install sleep
+npm install aws-sdk optimist readline sleep
 git clone git@github.com:yegor256/dynamo-archive.git
 ```
 
@@ -57,6 +55,15 @@ do
   s3cmd --no-progress put $t.json s3://backup.example.com/dynamo/$t.json
   rm $t.json
 done
+```
+
+## Restore AWS Dynamo DB table
+
+You can restore the table from JSON file created by `dynamo-archive.js`. Just
+run this and read for output:
+
+```
+node dynamo-restore.js
 ```
 
 ## License

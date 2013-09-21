@@ -14,13 +14,13 @@
  */
 
 var argv = require('optimist')
-    .usage('Archives Dynamo DB table to standard output in JSON\nUsage: $0 [options] > my-table.csv')
+    .usage('Archives Dynamo DB table to standard output in JSON\nUsage: $0 [options] > my-table.json')
     .demand(['key', 'secret', 'table'])
     .default('region', 'us-east-1')
     .default('rate', '100')
     .describe('key', 'Amazon IAM access key (20 symbols)')
     .describe('secret', 'Amazon IAM secret key (40 symbols)')
-    .describe('table', 'Comma-separated list of Dynamo DB tables to archive')
+    .describe('table', 'DynamoDB table name to archive')
     .describe('region', 'Amazon region, e.g. "us-east-1", "us-west-1", "eu-west-1", etc.')
     .describe('rate', 'Maximum percentage of table read capacity allowed to consume')
     .argv;
