@@ -21,7 +21,7 @@ and assign a policy to it ([how?](http://docs.aws.amazon.com/IAM/latest/UserGuid
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": "dynamodb:Scan",
+      "Action": ["dynamodb:Scan", "dynamodb:DescribeTable"],
       "Resource": "arn:aws:dynamodb:us-east-1:019644334823:table/test"
     }
   ]
