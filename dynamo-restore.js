@@ -42,6 +42,10 @@ dynamo.describeTable(
         TableName: argv.table
     },
     function (err, data) {
+        if (err != null) {
+            console.log('Error: ' + err);
+            process.exit(1);
+        }
         var quota = data.Table.ProvisionedThroughput.WriteCapacityUnits;
         var start = Date.now();
         var msecPerItem = Math.round(1000 / quota / (argv.rate / 100));

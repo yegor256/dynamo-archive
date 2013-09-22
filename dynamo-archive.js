@@ -64,6 +64,10 @@ dynamo.describeTable(
         TableName: argv.table
     },
     function (err, data) {
+        if (err != null) {
+            console.log('Error: ' + err);
+            process.exit(1);
+        }
         var quota = data.Table.ProvisionedThroughput.ReadCapacityUnits;
         scan(
             Date.now(),
