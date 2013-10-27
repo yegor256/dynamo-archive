@@ -8,10 +8,8 @@ Install it first (I assume you have
 [node.js](http://nodejs.org/) and
 [npm](https://npmjs.org/doc/install.html) installed already):
 
-```
-npm install aws-sdk optimist readline sleep
-git clone git@github.com:yegor256/dynamo-archive.git
-```
+> npm install aws-sdk optimist readline sleep
+> git clone git@github.com:yegor256/dynamo-archive.git
 
 Create a user in [Amazon IAM](http://aws.amazon.com/iam/)
 and assign a policy to it ([how?](http://docs.aws.amazon.com/IAM/latest/UserGuide/ManagingPolicies.html)):
@@ -34,15 +32,11 @@ access to all tables).
 
 Run it first without arguments and read the output:
 
-```
-node dynamo-archive.js
-```
+> node dynamo-archive.js
 
 To restore a table from a JSON file run:
 
-```
-node dynamo-restore.js
-```
+> node dynamo-restore.js
 
 ## Crontab automation
 
