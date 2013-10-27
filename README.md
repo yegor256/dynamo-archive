@@ -9,6 +9,7 @@ Install it first (I assume you have
 [npm](https://npmjs.org/doc/install.html) installed already):
 
 > npm install aws-sdk optimist readline sleep
+
 > git clone git@github.com:yegor256/dynamo-archive.git
 
 Create a user in [Amazon IAM](http://aws.amazon.com/iam/)
