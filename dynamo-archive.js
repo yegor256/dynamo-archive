@@ -68,6 +68,10 @@ dynamo.describeTable(
             console.log('Error: ' + err);
             process.exit(1);
         }
+        if (data == null) {
+            console.log('Table ' + argv.table + ' not found in DynamoDB');
+            process.exit(1);
+        }
         var quota = data.Table.ProvisionedThroughput.ReadCapacityUnits;
         scan(
             Date.now(),
