@@ -41,12 +41,10 @@ var scan = function(start, msecPerItem, done, params) {
         params,
         function (err, data) {
             if (err != null) {
-                console.log('Error: ' + err);
-                process.exit(1);
+                throw err;
             }
             if (data == null) {
-                console.log('dynamo.scan returned NULL instead of data');
-                process.exit(1);
+                throw 'dynamo.scan returned NULL instead of data';
             }
             for (var idx = 0; idx < data.Items.length; idx++) {
                 process.stdout.write(JSON.stringify(data.Items[idx]));
@@ -69,12 +67,10 @@ dynamo.describeTable(
     },
     function (err, data) {
         if (err != null) {
-            console.log('Error: ' + err);
-            process.exit(1);
+            throw err;
         }
         if (data == null) {
-            console.log('Table ' + argv.table + ' not found in DynamoDB');
-            process.exit(1);
+            throw 'Table ' + argv.table + ' not found in DynamoDB';
         }
         var quota = data.Table.ProvisionedThroughput.ReadCapacityUnits;
         scan(

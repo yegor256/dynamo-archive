@@ -43,12 +43,10 @@ dynamo.describeTable(
     },
     function (err, data) {
         if (err != null) {
-            console.log('Error: ' + err);
-            process.exit(1);
+            throw err;
         }
         if (data == null) {
-            console.log('Table ' + argv.table + ' not found in DynamoDB');
-            process.exit(1);
+            throw 'Table ' + argv.table + ' not found in DynamoDB';
         }
         var quota = data.Table.ProvisionedThroughput.WriteCapacityUnits;
         var start = Date.now();
@@ -64,8 +62,7 @@ dynamo.describeTable(
                     },
                     function (err, data) {
                         if (err != null) {
-                            console.log('Error: ' + err);
-                            process.exit(1);
+                            throw err;
                         }
                     }
                 );
