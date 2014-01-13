@@ -44,6 +44,10 @@ var scan = function(start, msecPerItem, done, params) {
                 console.log('Error: ' + err);
                 process.exit(1);
             }
+            if (data == null) {
+                console.log('dynamo.scan returned NULL instead of data');
+                process.exit(1);
+            }
             for (var idx = 0; idx < data.Items.length; idx++) {
                 process.stdout.write(JSON.stringify(data.Items[idx]));
                 process.stdout.write("\n");
