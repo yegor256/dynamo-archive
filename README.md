@@ -63,3 +63,7 @@ done
 ## License
 
 Licensed under the Apache License, Version 2.0.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/yegor256/dynamo-archive/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
