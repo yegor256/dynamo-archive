@@ -20,7 +20,7 @@ var sleep = require('sleep');
 
 var argv = utils.config({
     demand: ['table'],
-    optional: ['rate', 'region'],
+    optional: ['rate'],
     usage: 'Restores Dynamo DB table from JSON file\n' +
            'Usage: dynamo-archive --table my-table [--rate 100]'
 });

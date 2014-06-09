@@ -40,6 +40,27 @@ tests.push(['Export archive', function (t, done) {
     });
 }]);
 
+tests.push(['Export archive with query', function (t, done) {
+    t.plan(4);
+    var query = JSON.stringify({
+        Name: {
+            ComparisonOperator: 'EQ',
+            AttributeValueList: [{
+                S: 'foo'
+            }]
+        }
+    }).replace(/"/g,'\\"');
+    var cmd = 'dynamo-archive.js --table testing-table --query "'+query+'"';
+    exec(__dirname+'/../bin/' +cmd, opts, function(err, stdout, stderr) {
+        t.notOk(err, 'Exit cleanly');
+        t.notOk(stderr, 'Clean stderr');
+        t.ok(stdout.length > 0, 'Got results');
+        var records = stdout.split('\n').filter(function(v) { return v.length > 0; });
+        t.ok(records.length == 2, 'Found items');
+        done();
+    });
+}]);
+
 (function() {
     function runner() {
         var current = tests.shift();

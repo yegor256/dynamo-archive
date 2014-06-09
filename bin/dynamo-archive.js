@@ -16,11 +16,10 @@
 
 var utils = require('../lib/utils');
 var sleep = require('sleep');
-var AWS = require('aws-sdk');
 
 var argv = utils.config({
     demand: ['table'],
-    optional: ['rate', 'region'],
+    optional: ['rate', 'query'],
     usage: 'Archives Dynamo DB table to standard output in JSON\n' +
            'Usage: dynamo-archive --table my-table [--rate 100]'
 });
@@ -51,6 +50,31 @@ var scan = function(start, msecPerItem, done, params) {
         }
     );
 };
+var query = function(start, msecPerItem, done, params) {
+    dynamo.query(
+        params,
+        function (err, data) {
+            if (err != null) {
+                throw err;
+            }
+            if (data == null) {
+                throw 'dynamo.scan returned NULL instead of data';
+            }
+            for (var idx = 0; idx < data.Items.length; idx++) {
+                process.stdout.write(JSON.stringify(data.Items[idx]));
+                process.stdout.write("\n");
+            }
+            var expected = start + msecPerItem * (done + data.Items.length);
+            if (expected > Date.now()) {
+                sleep.usleep((expected - Date.now()) * 1000);
+            }
+            if (data.LastEvaluatedKey) {
+                params.ExclusiveStartKey = data.LastEvaluatedKey;
+                query(start, msecPerItem, done + data.Items.length, params);
+            }
+        }
+    );
+};
 dynamo.describeTable(
     {
         TableName: argv.table
@@ -63,15 +87,30 @@ dynamo.describeTable(
             throw 'Table ' + argv.table + ' not found in DynamoDB';
         }
         var quota = data.Table.ProvisionedThroughput.ReadCapacityUnits;
-        scan(
-            Date.now(),
-            Math.round(1000 / quota / ((argv.rate || 100) / 100)),
-            0,
-            {
-                TableName: argv.table,
-                ReturnConsumedCapacity: 'NONE',
-                Limit: quota
-            }
-        );
+        if (argv.query) {
+            query(
+                Date.now(),
+                Math.round(1000 / quota / ((argv.rate || 100) / 100)),
+                0,
+                {
+                    KeyConditions: JSON.parse(argv.query),
+                    TableName: argv.table,
+                    ReturnConsumedCapacity: 'NONE',
+                    Limit: quota
+                }
+            );
+        }
+        else {
+            scan(
+                Date.now(),
+                Math.round(1000 / quota / ((argv.rate || 100) / 100)),
+                0,
+                {
+                    TableName: argv.table,
+                    ReturnConsumedCapacity: 'NONE',
+                    Limit: quota
+                }
+            );
+        }
     }
 );
