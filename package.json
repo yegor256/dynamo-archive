@@ -1,0 +1,31 @@
+{
+  "name": "dynamo-archive",
+  "version": "0.0.1",
+  "description": "Backup DynamoDB tables to JSON files",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "aws-sdk": "1.18.x",
+    "minimist": "0.1.x",
+    "sleep": "1.1.x",
+    "dotenv": "0.2.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/miccolis/dynamo-archive.git"
+  },
+  "keywords": [
+    "AWS",
+    "DynamoDB",
+    "export",
+    "import",
+    "achive"
+  ],
+  "author": "",
+  "license": "Apache",
+  "bugs": {
+    "url": "https://github.com/miccolis/dynamo-archive/issues"
+  },
+  "homepage": "https://github.com/miccolis/dynamo-archive"
+}

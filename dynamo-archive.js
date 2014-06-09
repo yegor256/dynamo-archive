@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
  * Copyright 2013 Yegor Bugayenko
  *
@@ -13,27 +14,16 @@
  * limitations under the License.
  */
 
-var argv = require('optimist')
-    .usage('Archives Dynamo DB table to standard output in JSON\nUsage: $0 [options] > my-table.json')
-    .demand(['key', 'secret', 'table'])
-    .default('region', 'us-east-1')
-    .default('rate', '100')
-    .describe('key', 'Amazon IAM access key (20 symbols)')
-    .describe('secret', 'Amazon IAM secret key (40 symbols)')
-    .describe('table', 'DynamoDB table name to archive')
-    .describe('region', 'Amazon region, e.g. "us-east-1", "us-west-1", "eu-west-1", etc.')
-    .describe('rate', 'Maximum percentage of table read capacity allowed to consume')
-    .argv;
-
+var utils = require('./lib/utils');
 var sleep = require('sleep');
 var AWS = require('aws-sdk');
-AWS.config.update(
-    {
-        accessKeyId: argv.key,
-        secretAccessKey: argv.secret,
-        region: argv.region,
-    }
-);
+
+var argv = utils.config({
+    demand: ['table'],
+    optional: ['rate', 'region'],
+    usage: 'Archives Dynamo DB table to standard output in JSON\n' +
+           'Usage: dynamo-archive --table my-table [--rate 100]'
+});
 
 var dynamo = new AWS.DynamoDB();
 var scan = function(start, msecPerItem, done, params) {
@@ -75,7 +65,7 @@ dynamo.describeTable(
         var quota = data.Table.ProvisionedThroughput.ReadCapacityUnits;
         scan(
             Date.now(),
-            Math.round(1000 / quota / (argv.rate / 100)),
+            Math.round(1000 / quota / ((argv.rate || 100) / 100)),
             0,
             {
                 TableName: argv.table,
