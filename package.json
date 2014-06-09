@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Backup DynamoDB tables to JSON files",
   "scripts": {
-    "test": "./node_modules/.bin/tape test/archive.test.js"
+    "test": "tape test/archive.test.js | faucet"
   },
   "dependencies": {
     "aws-sdk": "1.18.x",
@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "tape": "~2.13.2",
+    "faucet": "0.0.x",
     "dynalite": "0.3.x"
   },
   "bin": {
