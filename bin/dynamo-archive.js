@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-var utils = require('./lib/utils');
+var utils = require('../lib/utils');
 var sleep = require('sleep');
 var AWS = require('aws-sdk');
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-var utils = require('./lib/utils');
+var utils = require('../lib/utils');
 var readline = require('readline');
 var sleep = require('sleep');
 

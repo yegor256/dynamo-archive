@@ -11,6 +11,10 @@
     "sleep": "1.1.x",
     "dotenv": "0.2.x"
   },
+  "bin": {
+      "dynamo-archive": "bin/dynamo-archive.js",
+      "dynamo-restore": "bin/dynamo-restore.js"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/miccolis/dynamo-archive.git"
