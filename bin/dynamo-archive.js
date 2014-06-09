@@ -25,7 +25,7 @@ var argv = utils.config({
            'Usage: dynamo-archive --table my-table [--rate 100]'
 });
 
-var dynamo = new AWS.DynamoDB();
+var dynamo = utils.dynamo;
 var scan = function(start, msecPerItem, done, params) {
     dynamo.scan(
         params,

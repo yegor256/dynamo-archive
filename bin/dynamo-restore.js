@@ -25,7 +25,7 @@ var argv = utils.config({
            'Usage: dynamo-archive --table my-table [--rate 100]'
 });
 
-var dynamo = argv.dynamo;
+var dynamo = utils.dynamo;
 dynamo.describeTable(
     {
         TableName: argv.table

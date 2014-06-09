@@ -3,13 +3,17 @@
   "version": "0.0.1",
   "description": "Backup DynamoDB tables to JSON files",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/tape test/archive.test.js"
   },
   "dependencies": {
     "aws-sdk": "1.18.x",
     "minimist": "0.1.x",
     "sleep": "1.1.x",
     "dotenv": "0.2.x"
+  },
+  "devDependencies": {
+    "tape": "~2.13.2",
+    "dynalite": "0.3.x"
   },
   "bin": {
       "dynamo-archive": "bin/dynamo-archive.js",
