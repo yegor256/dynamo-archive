@@ -77,7 +77,7 @@ tests.push(['Export archive with query', function (t, done) {
         region: opts.env.AWS_DEFAULT_REGION || 'us-east-1'
     });
 
-    var dbServer = dynalite({createTableMs: 50});
+    var dbServer = dynalite({createTableMs: 5});
     dbServer.listen(4567, function(err) {
         if (err) throw err;
         var dynamo = new AWS.DynamoDB({
@@ -105,8 +105,8 @@ tests.push(['Export archive with query', function (t, done) {
             }
           ],
           ProvisionedThroughput: { 
-            ReadCapacityUnits: 1, 
-            WriteCapacityUnits: 1
+            ReadCapacityUnits: 10,
+            WriteCapacityUnits: 10
           },
           TableName: 'testing-table'
         };
