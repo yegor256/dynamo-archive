@@ -21,7 +21,7 @@ var argv = utils.config({
     demand: ['table'],
     optional: ['rate', 'query'],
     usage: 'Archives Dynamo DB table to standard output in JSON\n' +
-           'Usage: dynamo-archive --table my-table [--rate 100]'
+           'Usage: dynamo-archive --table my-table [--rate 100] [--query "{}"]'
 });
 
 var dynamo = utils.dynamo;
