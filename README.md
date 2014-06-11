@@ -42,13 +42,13 @@ access to all tables).
 Run it first without arguments and read the output:
 
 ```bash
-./bin/dynamo-archive.js
+$ ./bin/dynamo-archive.js
 ```
 
 To restore a table from a JSON file run:
 
 ```bash
-./bin/dynamo-restore.js
+$ ./bin/dynamo-restore.js
 ```
 
 ## Crontab automation
