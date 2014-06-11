@@ -20,12 +20,12 @@ var sleep = require('sleep');
 
 var argv = utils.config({
     demand: ['table'],
-    optional: ['rate'],
+    optional: ['rate', 'key', 'secret', 'region'],
     usage: 'Restores Dynamo DB table from JSON file\n' +
-           'Usage: dynamo-archive --table my-table [--rate 100]'
+           'Usage: dynamo-archive --table my-table [--rate 100] [--region us-east-1] [--key AK...AA] [--secret 7a...IG]'
 });
 
-var dynamo = utils.dynamo;
+var dynamo = utils.dynamo(argv);
 dynamo.describeTable(
     {
         TableName: argv.table

@@ -19,15 +19,16 @@ var sleep = require('sleep');
 
 var argv = utils.config({
     demand: ['table'],
-    optional: ['rate', 'query'],
+    optional: ['rate', 'query', 'key', 'secret', 'region'],
     usage: 'Archives Dynamo DB table to standard output in JSON\n' +
-           'Usage: dynamo-archive --table my-table [--rate 100] [--query "{}"]'
+           'Usage: dynamo-archive --table my-table [--rate 100] [--query "{}"] [--region us-east-1] [--key AK...AA] [--secret 7a...IG]'
 });
 
-var dynamo = utils.dynamo;
+var dynamo = utils.dynamo(argv);
 function search(params) {
+    var msecPerItem = Math.round(1000 / params.limit / ((argv.rate || 100) / 100));
     var method = params.KeyConditions ? dynamo.query : dynamo.scan;
-    var scan = function(start, msecPerItem, done, params) {
+    var read = function(start, done, params) {
         method.call(
             dynamo,
             params,
@@ -48,14 +49,12 @@ function search(params) {
                 }
                 if (data.LastEvaluatedKey) {
                     params.ExclusiveStartKey = data.LastEvaluatedKey;
-                    scan(start, msecPerItem, done + data.Items.length, params);
+                    read(start, done + data.Items.length, params);
                 }
             }
         );
     };
-
-    var msecPerItem = Math.round(1000 / params.limit / ((argv.rate || 100) / 100));
-    scan(Date.now(), msecPerItem, 0, params);
+    read(Date.now(), 0, params);
 };
 
 dynamo.describeTable(
