@@ -25,56 +25,39 @@ var argv = utils.config({
 });
 
 var dynamo = utils.dynamo;
-var scan = function(start, msecPerItem, done, params) {
-    dynamo.scan(
-        params,
-        function (err, data) {
-            if (err != null) {
-                throw err;
+function search(params) {
+    var method = params.KeyConditions ? dynamo.query : dynamo.scan;
+    var scan = function(start, msecPerItem, done, params) {
+        method.call(
+            dynamo,
+            params,
+            function (err, data) {
+                if (err != null) {
+                    throw err;
+                }
+                if (data == null) {
+                    throw 'dynamo returned NULL instead of data';
+                }
+                for (var idx = 0; idx < data.Items.length; idx++) {
+                    process.stdout.write(JSON.stringify(data.Items[idx]));
+                    process.stdout.write("\n");
+                }
+                var expected = start + msecPerItem * (done + data.Items.length);
+                if (expected > Date.now()) {
+                    sleep.usleep((expected - Date.now()) * 1000);
+                }
+                if (data.LastEvaluatedKey) {
+                    params.ExclusiveStartKey = data.LastEvaluatedKey;
+                    scan(start, msecPerItem, done + data.Items.length, params);
+                }
             }
-            if (data == null) {
-                throw 'dynamo.scan returned NULL instead of data';
-            }
-            for (var idx = 0; idx < data.Items.length; idx++) {
-                process.stdout.write(JSON.stringify(data.Items[idx]));
-                process.stdout.write("\n");
-            }
-            var expected = start + msecPerItem * (done + data.Items.length);
-            if (expected > Date.now()) {
-                sleep.usleep((expected - Date.now()) * 1000);
-            }
-            if (data.LastEvaluatedKey) {
-                params.ExclusiveStartKey = data.LastEvaluatedKey;
-                scan(start, msecPerItem, done + data.Items.length, params);
-            }
-        }
-    );
+        );
+    };
+
+    var msecPerItem = Math.round(1000 / params.limit / ((argv.rate || 100) / 100));
+    scan(Date.now(), msecPerItem, 0, params);
 };
-var query = function(start, msecPerItem, done, params) {
-    dynamo.query(
-        params,
-        function (err, data) {
-            if (err != null) {
-                throw err;
-            }
-            if (data == null) {
-                throw 'dynamo.scan returned NULL instead of data';
-            }
-            for (var idx = 0; idx < data.Items.length; idx++) {
-                process.stdout.write(JSON.stringify(data.Items[idx]));
-                process.stdout.write("\n");
-            }
-            var expected = start + msecPerItem * (done + data.Items.length);
-            if (expected > Date.now()) {
-                sleep.usleep((expected - Date.now()) * 1000);
-            }
-            if (data.LastEvaluatedKey) {
-                params.ExclusiveStartKey = data.LastEvaluatedKey;
-                query(start, msecPerItem, done + data.Items.length, params);
-            }
-        }
-    );
-};
+
 dynamo.describeTable(
     {
         TableName: argv.table
@@ -86,31 +69,14 @@ dynamo.describeTable(
         if (data == null) {
             throw 'Table ' + argv.table + ' not found in DynamoDB';
         }
-        var quota = data.Table.ProvisionedThroughput.ReadCapacityUnits;
+        var params = {
+            TableName: argv.table,
+            ReturnConsumedCapacity: 'NONE',
+            Limit: data.Table.ProvisionedThroughput.ReadCapacityUnits
+        };
         if (argv.query) {
-            query(
-                Date.now(),
-                Math.round(1000 / quota / ((argv.rate || 100) / 100)),
-                0,
-                {
-                    KeyConditions: JSON.parse(argv.query),
-                    TableName: argv.table,
-                    ReturnConsumedCapacity: 'NONE',
-                    Limit: quota
-                }
-            );
+            params.KeyConditions = JSON.parse(argv.query);
         }
-        else {
-            scan(
-                Date.now(),
-                Math.round(1000 / quota / ((argv.rate || 100) / 100)),
-                0,
-                {
-                    TableName: argv.table,
-                    ReturnConsumedCapacity: 'NONE',
-                    Limit: quota
-                }
-            );
-        }
+        search(params);
     }
 );
