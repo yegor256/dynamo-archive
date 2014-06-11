@@ -1,25 +1,16 @@
+var path = require('path');
 var test = require('tape').test
 var dynalite = require('dynalite');
 var exec = require('child_process').exec;
 var aws = require('aws-sdk');
 
-var opts = {
-    env: {
-        AWS_ACCESS_KEY_ID: 'fake',
-        AWS_SECRET_ACCESS_KEY: 'fake',
-        AWS_DYNAMODB_ENDPOINT: 'http://localhost:4567',
-        PATH: process.env.PATH
-    },
-    timeout: 10000
-};
-
 var tests = [];
 
-tests.push(['Load archive', function (t, done) {
+tests.push(['Load archive', function (t, opts, done) {
     t.plan(3);
-    var fixture = __dirname+'/fixture.json';
-    var cmd = 'dynamo-restore.js --table testing-table < '+fixture;
-    exec(__dirname+'/../bin/' +cmd, opts, function(err, stdout, stderr) {
+    var fixture = path.join(__dirname, 'fixture.json');
+    var cmd = './dynamo-restore.js --table testing-table < '+fixture;
+    exec(cmd, opts, function(err, stdout, stderr) {
         t.notOk(err, 'Exit cleanly');
         t.notOk(stdout, 'Clean stdout');
         t.notOk(stderr, 'Clean stderr');
@@ -27,10 +18,10 @@ tests.push(['Load archive', function (t, done) {
     });
 }]);
 
-tests.push(['Export archive', function (t, done) {
+tests.push(['Export archive', function (t, opts, done) {
     t.plan(4);
-    var cmd = 'dynamo-archive.js --table testing-table';
-    exec(__dirname+'/../bin/' +cmd, opts, function(err, stdout, stderr) {
+    var cmd = './dynamo-archive.js --table testing-table';
+    exec(cmd, opts, function(err, stdout, stderr) {
         t.notOk(err, 'Exit cleanly');
         t.notOk(stderr, 'Clean stderr');
         t.ok(stdout.length > 0, 'Got results');
@@ -40,7 +31,7 @@ tests.push(['Export archive', function (t, done) {
     });
 }]);
 
-tests.push(['Export archive with query', function (t, done) {
+tests.push(['Export archive with query', function (t, opts, done) {
     t.plan(4);
     var query = JSON.stringify({
         Name: {
@@ -50,8 +41,8 @@ tests.push(['Export archive with query', function (t, done) {
             }]
         }
     }).replace(/"/g,'\\"');
-    var cmd = 'dynamo-archive.js --table testing-table --query "'+query+'"';
-    exec(__dirname+'/../bin/' +cmd, opts, function(err, stdout, stderr) {
+    var cmd = './dynamo-archive.js --table testing-table --query "'+query+'"';
+    exec(cmd, opts, function(err, stdout, stderr) {
         t.notOk(err, 'Exit cleanly');
         t.notOk(stderr, 'Clean stderr');
         t.ok(stdout.length > 0, 'Got results');
@@ -62,6 +53,17 @@ tests.push(['Export archive with query', function (t, done) {
 }]);
 
 (function() {
+    var opts = {
+        env: {
+            AWS_ACCESS_KEY_ID: 'fake',
+            AWS_SECRET_ACCESS_KEY: 'fake',
+            AWS_DYNAMODB_ENDPOINT: 'http://localhost:',
+            PATH: process.env.PATH
+        },
+        cwd: path.join(__dirname,'../bin/'),
+        timeout: 10000
+    };
+
     function runner() {
         var current = tests.shift();
         if (!current) {
@@ -69,7 +71,7 @@ tests.push(['Export archive with query', function (t, done) {
         }
 
         test(current[0], function(t) {
-            current[1].call(this, t, runner);
+            current[1].call(this, t, opts, runner);
         });
     }
 
@@ -80,10 +82,11 @@ tests.push(['Export archive with query', function (t, done) {
     });
 
     var dbServer = dynalite({createTableMs: 5});
-    dbServer.listen(4567, function(err) {
+    dbServer.listen(0, function(err) {
         if (err != null) {
             throw err;
         }
+        opts.env.AWS_DYNAMODB_ENDPOINT += dbServer.address().port;
         var dynamo = new aws.DynamoDB({
             endpoint: new aws.Endpoint(opts.env.AWS_DYNAMODB_ENDPOINT)
         });
