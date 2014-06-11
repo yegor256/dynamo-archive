@@ -1,7 +1,7 @@
 var test = require('tape').test
 var dynalite = require('dynalite');
 var exec = require('child_process').exec;
-var AWS = require('aws-sdk');
+var aws = require('aws-sdk');
 
 var opts = {
     env: {
@@ -64,14 +64,16 @@ tests.push(['Export archive with query', function (t, done) {
 (function() {
     function runner() {
         var current = tests.shift();
-        if (!current) return dbServer.close();
+        if (!current) {
+            return dbServer.close();
+        }
 
         test(current[0], function(t) {
             current[1].call(this, t, runner);
         });
     }
 
-    AWS.config.update({
+    aws.config.update({
         accessKeyId: opts.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: opts.env.AWS_SECRET_ACCESS_KEY,
         region: opts.env.AWS_DEFAULT_REGION || 'us-east-1'
@@ -79,9 +81,11 @@ tests.push(['Export archive with query', function (t, done) {
 
     var dbServer = dynalite({createTableMs: 5});
     dbServer.listen(4567, function(err) {
-        if (err) throw err;
-        var dynamo = new AWS.DynamoDB({
-            endpoint: new AWS.Endpoint(opts.env.AWS_DYNAMODB_ENDPOINT)
+        if (err != null) {
+            throw err;
+        }
+        var dynamo = new aws.DynamoDB({
+            endpoint: new aws.Endpoint(opts.env.AWS_DYNAMODB_ENDPOINT)
         });
         var params = {
           AttributeDefinitions: [ 
@@ -111,7 +115,9 @@ tests.push(['Export archive with query', function (t, done) {
           TableName: 'testing-table'
         };
         dynamo.createTable(params, function(err, data) {
-            if (err) throw err;
+            if (err != null) {
+                throw err;
+            }
             runner();
         });
     });
