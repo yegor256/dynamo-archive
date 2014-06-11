@@ -8,11 +8,13 @@ Install prerequisites first (I assume you have
 [node.js](http://nodejs.org/) and
 [npm](https://npmjs.org/doc/install.html) installed already):
 
-> npm install aws-sdk optimist readline sleep
-
-Then, clone the project:
+Clone the project:
 
 > git clone git@github.com:yegor256/dynamo-archive.git
+
+Then, install the dependencies:
+
+> cd dynamo-archive && npm install
 
 Create a user in [Amazon IAM](http://aws.amazon.com/iam/)
 and assign a policy to it ([how?](http://docs.aws.amazon.com/IAM/latest/UserGuide/ManagingPolicies.html)):
@@ -35,11 +37,11 @@ access to all tables).
 
 Run it first without arguments and read the output:
 
-> node dynamo-archive.js
+> ./bin/dynamo-archive.js
 
 To restore a table from a JSON file run:
 
-> node dynamo-restore.js
+> ./bin/dynamo-restore.js
 
 ## Crontab automation
 
@@ -49,12 +51,12 @@ of your Dynamo DB tables and save them to S3 (I'm using [s3cmd](http://s3tools.o
 ```bash
 #/bin/bash
 
-KEY=AKIAJK.......XWGA5AA
-SECRET=7aDUFa68GN....................IGcH0zTf3k
+AWS_ACCESS_KEY_ID=AKIAJK.......XWGA5AA
+AWS_SECRET_ACCESS_KEY=7aDUFa68GN....................IGcH0zTf3k
 declare -a TABLES=(first second third)
 for t in ${TABLES[@]}
 do
-  node dynamo-archive/dynamo-archive.js --key=$KEY --secret=$SECRET --table=$t > $t.json
+  dynamo-archive/bin/dynamo-archive.js --key=$KEY --secret=$SECRET --table=$t > $t.json
   s3cmd --no-progress put $t.json s3://backup.example.com/dynamo/$t.json
   rm $t.json
 done

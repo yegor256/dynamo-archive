@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
  * Copyright 2013 Yegor Bugayenko
  *
@@ -13,30 +14,18 @@
  * limitations under the License.
  */
 
-var argv = require('optimist')
-    .usage('Restores Dynamo DB table from JSON file\nUsage: $0 [options] < my-table.json')
-    .demand(['key', 'secret', 'table'])
-    .default('region', 'us-east-1')
-    .default('rate', '100')
-    .describe('key', 'Amazon IAM access key (20 symbols)')
-    .describe('secret', 'Amazon IAM secret key (40 symbols)')
-    .describe('table', 'Table name to restore')
-    .describe('region', 'Amazon region, e.g. "us-east-1", "us-west-1", "eu-west-1", etc.')
-    .describe('rate', 'Maximum percentage of table write capacity allowed to consume')
-    .argv;
-
+var utils = require('../lib/utils');
 var readline = require('readline');
 var sleep = require('sleep');
-var AWS = require('aws-sdk');
-AWS.config.update(
-    {
-        accessKeyId: argv.key,
-        secretAccessKey: argv.secret,
-        region: argv.region,
-    }
-);
 
-var dynamo = new AWS.DynamoDB();
+var argv = utils.config({
+    demand: ['table'],
+    optional: ['rate', 'key', 'secret', 'region'],
+    usage: 'Restores Dynamo DB table from JSON file\n' +
+           'Usage: dynamo-archive --table my-table [--rate 100] [--region us-east-1] [--key AK...AA] [--secret 7a...IG]'
+});
+
+var dynamo = utils.dynamo(argv);
 dynamo.describeTable(
     {
         TableName: argv.table
@@ -50,7 +39,7 @@ dynamo.describeTable(
         }
         var quota = data.Table.ProvisionedThroughput.WriteCapacityUnits;
         var start = Date.now();
-        var msecPerItem = Math.round(1000 / quota / (argv.rate / 100));
+        var msecPerItem = Math.round(1000 / quota / ((argv.rate || 100) / 100));
         var done = 0;
         readline.createInterface(process.stdin, process.stdout).on(
             'line',
