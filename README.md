@@ -56,7 +56,7 @@ AWS_SECRET_ACCESS_KEY=7aDUFa68GN....................IGcH0zTf3k
 declare -a TABLES=(first second third)
 for t in ${TABLES[@]}
 do
-  dynamo-archive/bin/dynamo-archive.js --key=$KEY --secret=$SECRET --table=$t > $t.json
+  dynamo-archive/bin/dynamo-archive.js --table=$t > $t.json
   s3cmd --no-progress put $t.json s3://backup.example.com/dynamo/$t.json
   rm $t.json
 done
