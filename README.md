@@ -10,16 +10,20 @@ Install prerequisites first (I assume you have
 
 Clone the project:
 
-> git clone git@github.com:yegor256/dynamo-archive.git
+```bash
+$ git clone git@github.com:yegor256/dynamo-archive.git
+```
 
 Then, install the dependencies:
 
-> cd dynamo-archive && npm install
+```bash
+$ cd dynamo-archive && npm install
+```
 
 Create a user in [Amazon IAM](http://aws.amazon.com/iam/)
 and assign a policy to it ([how?](http://docs.aws.amazon.com/IAM/latest/UserGuide/ManagingPolicies.html)):
 
-```
+```json
 {
   "Statement": [
     {
@@ -37,11 +41,15 @@ access to all tables).
 
 Run it first without arguments and read the output:
 
-> ./bin/dynamo-archive.js
+```bash
+./bin/dynamo-archive.js
+```
 
 To restore a table from a JSON file run:
 
-> ./bin/dynamo-restore.js
+```bash
+./bin/dynamo-restore.js
+```
 
 ## Crontab automation
 
