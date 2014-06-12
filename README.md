@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/yegor256/dynamo-archive.svg)](https://travis-ci.org/yegor256/dynamo-archive)
+
 ## Archive and Restore AWS Dynamo DB Table
 
 There are two simple Node.js scripts that archive and restore an entire
