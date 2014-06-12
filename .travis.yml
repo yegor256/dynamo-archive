@@ -3,7 +3,7 @@ branches:
   only:
     - master
 install:
-  - npm install -g
+  - npm install
 script:
   - npm test
 
