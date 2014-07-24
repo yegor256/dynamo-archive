@@ -47,10 +47,11 @@ dynamo.describeTable(
                 dynamo.putItem(
                     {
                         TableName: argv.table,
-                        Item: JSON.parse(line),
+                        Item: JSON.parse(line)
                     },
                     function (err, data) {
-                        if (err != null) {
+                        if (err) {
+                            console.log(err, err.stack);
                             throw err;
                         }
                     }
