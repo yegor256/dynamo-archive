@@ -7,20 +7,12 @@ There are two simple Node.js scripts that archive and restore an entire
 [AWS Dynamo DB](http://aws.amazon.com/dynamodb/)
 table in JSON format.
 
-Install prerequisites first (I assume you have
+Install it first (I assume you have
 [node.js](http://nodejs.org/) and
 [npm](https://npmjs.org/doc/install.html) installed already):
 
-Clone the project:
-
 ```bash
-$ git clone git@github.com:yegor256/dynamo-archive.git
-```
-
-Then, install the dependencies:
-
-```bash
-$ cd dynamo-archive && npm install
+$ npm install dynamo-archive
 ```
 
 Create a user in [Amazon IAM](http://aws.amazon.com/iam/)
