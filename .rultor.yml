@@ -1,0 +1,9 @@
+decrypt:
+  npmrc: "repo/npmrc.asc"
+
+release:
+  script: |
+    npm test
+    sed -i "s/1.0-snapshot/${tag}/g" package.json
+    npm --userconfig=./npmrc publish . dynamo-archive@${tag}
+    npm --userconfig=./npmrc tag dynamo-archive@${tag} latest

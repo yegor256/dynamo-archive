@@ -1,4 +1,5 @@
 [![Made By Teamed.io](http://img.teamed.io/btn.svg)](http://www.teamed.io)
+[![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/dynamo-archive)](http://www.rultor.com/p/yegor256/dynamo-archive)
 
 [![Build Status](https://travis-ci.org/yegor256/dynamo-archive.svg)](https://travis-ci.org/yegor256/dynamo-archive)
 [![NPM version](https://badge.fury.io/js/dynamo-archive.svg)](http://badge.fury.io/js/dynamo-archive)
