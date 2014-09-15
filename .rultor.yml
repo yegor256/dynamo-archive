@@ -3,6 +3,7 @@ decrypt:
 
 release:
   script: |
+    sudo ln -s /usr/bin/nodejs /usr/bin/node
     npm install
     npm test
     sed -i "s/0.0.0/${tag}/g" package.json
