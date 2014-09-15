@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/yegor256/dynamo-archive.svg)](https://travis-ci.org/yegor256/dynamo-archive)
 [![NPM version](https://badge.fury.io/js/dynamo-archive.svg)](http://badge.fury.io/js/dynamo-archive)
+[![Dependency Status](https://gemnasium.com/yegor256/dynamo-archive.svg)](https://gemnasium.com/yegor256/dynamo-archive)
 
 ## Archive and Restore AWS Dynamo DB Table
 
