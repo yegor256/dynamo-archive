@@ -7,4 +7,5 @@ release:
     npm install
     npm test
     sed -i "s/0.0.0/${tag}/g" package.json
+    chmod 600 ../npmrc
     npm publish --userconfig=../npmrc
