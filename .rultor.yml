@@ -4,6 +4,6 @@ decrypt:
 release:
   script: |
     npm test
-    sed -i "s/1.0-snapshot/${tag}/g" package.json
+    sed -i "s/0.0.0/${tag}/g" package.json
     npm --userconfig=./npmrc publish . dynamo-archive@${tag}
     npm --userconfig=./npmrc tag dynamo-archive@${tag} latest

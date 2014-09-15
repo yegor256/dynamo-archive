@@ -1,6 +1,6 @@
 {
   "name": "dynamo-archive",
-  "version": "1.0-snapshot",
+  "version": "0.0.0",
   "description": "Backup DynamoDB tables to JSON files",
   "scripts": {
     "test": "tape test/archive.test.js | faucet"
