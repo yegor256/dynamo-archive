@@ -26,7 +26,7 @@ var argv = utils.config({
 
 var dynamo = utils.dynamo(argv);
 function search(params) {
-    var msecPerItem = Math.round(1000 / params.limit / ((argv.rate || 100) / 100));
+    var msecPerItem = Math.round(1000 / params.Limit / ((argv.rate || 100) / 100));
     var method = params.KeyConditions ? dynamo.query : dynamo.scan;
     var read = function(start, done, params) {
         method.call(
