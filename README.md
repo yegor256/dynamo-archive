@@ -60,6 +60,8 @@ of your Dynamo DB tables and save them to S3 (I'm using [s3cmd](http://s3tools.o
 
 AWS_ACCESS_KEY_ID=AKIAJK.......XWGA5AA
 AWS_SECRET_ACCESS_KEY=7aDUFa68GN....................IGcH0zTf3k
+#optional endpoint for DynamoDB local
+AWS_DYNAMODB_ENDPOINT=http://localhost:8000/
 declare -a TABLES=(first second third)
 for t in ${TABLES[@]}
 do
