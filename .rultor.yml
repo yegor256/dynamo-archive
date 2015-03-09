@@ -1,4 +1,5 @@
-decrypt: {npmrc: repo/npmrc.asc}
+decrypt:
+  npmrc: repo/npmrc.asc
 release:
   script: |-
     npm install
@@ -6,4 +7,7 @@ release:
     sed -i "s/0.0.0/${tag}/g" package.json
     chmod 600 ../npmrc
     npm publish --userconfig=../npmrc
-architect: [yegor256, yegor256, davvd]
+architect:
+- yegor256
+- yegor256
+- davvd
