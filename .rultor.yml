@@ -13,3 +13,6 @@ architect:
 merge:
   commanders:
   - yegor256
+deploy:
+  commanders:
+  - yegor256
