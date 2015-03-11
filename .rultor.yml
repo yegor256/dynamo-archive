@@ -8,6 +8,5 @@ release:
     chmod 600 ../npmrc
     npm publish --userconfig=../npmrc
 architect:
-- yegor256
-- yegor256
 - davvd
+- yegor256
