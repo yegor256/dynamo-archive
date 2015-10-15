@@ -1,8 +1,9 @@
 decrypt:
   npmrc: repo/npmrc.asc
+install: |
+  npm install
 release:
   script: |-
-    npm install
     npm test
     sed -i "s/0.0.0/${tag}/g" package.json
     chmod 600 ../npmrc
@@ -14,6 +15,10 @@ architect:
 - davvd
 merge:
   commanders: []
+  script: |-
+    npm test
 deploy:
   commanders:
   - yegor256
+  script: |-
+    npm test
