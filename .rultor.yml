@@ -15,10 +15,8 @@ architect:
 - davvd
 merge:
   commanders: []
-  script: |-
-    npm test
+  script: npm test
 deploy:
   commanders:
   - yegor256
-  script: |-
-    npm test
+  script: npm test
