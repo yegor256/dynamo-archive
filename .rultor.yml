@@ -17,6 +17,4 @@ merge:
   commanders: []
   script: npm test
 deploy:
-  commanders:
-  - yegor256
   script: npm test
