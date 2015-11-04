@@ -4,6 +4,7 @@ install: |
   npm install
 release:
   script: |-
+    node --version
     npm -version
     npm test
     sed -i "s/0.0.0/${tag}/g" package.json
