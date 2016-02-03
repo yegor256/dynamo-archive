@@ -6,7 +6,7 @@
     "test": "tape test/archive.test.js | faucet"
   },
   "dependencies": {
-    "aws-sdk": "2.0.x",
+    "aws-sdk": "2.2.x",
     "minimist": "1.1.x",
     "sleep": "3.0.x",
     "dotenv": "0.4.x"
