@@ -71,6 +71,33 @@ do
 done
 ```
 
+You can also save locally and export to csv
+
+```bash
+#/bin/bash
+
+AWS_ACCESS_KEY_ID=AKIAJK.......XWGA5AA
+AWS_SECRET_ACCESS_KEY=7aDUFa68GN....................IGcH0zTf3k
+#/bin/bash
+#make a dir with the current datetime and cd into it
+DT=$(date +%Y%m%d_%H%M%S)
+mkdir $DT && cd $DT
+#archive all into json files
+declare -a TABLES=(first second third)
+for t in ${TABLES[@]}
+do
+	dynamo-archive/bin/dynamo-archive.js --table=$t > $t.json
+done
+#export the json into csv
+for t in ${TABLES[@]}
+do
+	dynamo-archive/bin/dynamo-export.js --file=$t.json > $t.csv
+done
+cd ../
+
+```
+
+
 ## License
 
 Licensed under the Apache License, Version 2.0.
