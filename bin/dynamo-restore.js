@@ -20,9 +20,9 @@ var sleep = require('sleep');
 
 var argv = utils.config({
     demand: ['table'],
-    optional: ['rate', 'key', 'secret', 'region'],
+    optional: ['rate', 'key', 'secret', 'region', 'endpoint'],
     usage: 'Restores Dynamo DB table from JSON file\n' +
-           'Usage: dynamo-archive --table my-table [--rate 100] [--region us-east-1] [--key AK...AA] [--secret 7a...IG]'
+           'Usage: dynamo-restore --table my-table [--rate 100] [--region us-east-1] [--key AK...AA] [--secret 7a...IG] [--endpoint http://localhost:8000]'
 });
 
 var dynamo = utils.dynamo(argv);

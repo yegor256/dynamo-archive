@@ -5,9 +5,9 @@
 [![NPM version](https://badge.fury.io/js/dynamo-archive.svg)](http://badge.fury.io/js/dynamo-archive)
 [![Dependency Status](https://gemnasium.com/yegor256/dynamo-archive.svg)](https://gemnasium.com/yegor256/dynamo-archive)
 
-## Archive and Restore AWS Dynamo DB Table
+## Archive, Restore and Export to CSV AWS Dynamo DB Table
 
-There are two simple Node.js scripts that archive and restore an entire
+There are three simple Node.js scripts that archive, restore and export to csv an entire
 [AWS Dynamo DB](http://aws.amazon.com/dynamodb/)
 table in JSON format.
 
@@ -71,10 +71,36 @@ do
 done
 ```
 
+You can also save locally and export to csv
+
+```bash
+#/bin/bash
+
+AWS_ACCESS_KEY_ID=AKIAJK.......XWGA5AA
+AWS_SECRET_ACCESS_KEY=7aDUFa68GN....................IGcH0zTf3k
+#/bin/bash
+#make a dir with the current datetime and cd into it
+DT=$(date +%Y%m%d_%H%M%S)
+mkdir $DT && cd $DT
+#archive all into json files
+declare -a TABLES=(first second third)
+for t in ${TABLES[@]}
+do
+	dynamo-archive/bin/dynamo-archive.js --table=$t > $t.json
+done
+#export the json into csv
+for t in ${TABLES[@]}
+do
+	dynamo-archive/bin/dynamo-export.js --file=$t.json > $t.csv
+done
+cd ../
+
+```
+
+
 ## License
 
 Licensed under the Apache License, Version 2.0.
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/yegor256/dynamo-archive/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-

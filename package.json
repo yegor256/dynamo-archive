@@ -9,7 +9,9 @@
     "aws-sdk": "2.2.x",
     "minimist": "1.1.x",
     "sleep": "3.0.x",
-    "dotenv": "0.4.x"
+    "dotenv": "0.4.x",
+    "moment-timezone": "0.5.11",
+    "dynamodb-marshaler": "1.2.2"
   },
   "devDependencies": {
     "tape": "~2.13.2",
@@ -18,7 +20,8 @@
   },
   "bin": {
     "dynamo-archive": "bin/dynamo-archive.js",
-    "dynamo-restore": "bin/dynamo-restore.js"
+    "dynamo-restore": "bin/dynamo-restore.js",
+    "dynamo-export": "bin/dynamo-export.js"
   },
   "repository": {
     "type": "git",
