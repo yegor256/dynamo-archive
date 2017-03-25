@@ -59,7 +59,7 @@ function writeDateToCsv(headers, file) {
                value = item[header]
                //-- Check if timestamp, there is maybe a better way to do this
                if(typeof value === "number" && value > 1400000000000)
-                  value = moment(parseInt(value)).format('dddd D MMMM YYYY à kk:mm')
+                  value = moment(parseInt(value)).format('YYYY/MM/D-kk:mm')
 
             } else {
                value = ""
