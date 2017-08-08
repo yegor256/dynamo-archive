@@ -20,9 +20,9 @@ var sleep = require('sleep');
 
 var argv = utils.config({
     demand: ['table'],
-    optional: ['rate', 'key', 'secret', 'region'],
+    optional: ['rate', 'key', 'secret', 'region', 'v'],
     usage: 'Restores Dynamo DB table from JSON file\n' +
-           'Usage: dynamo-archive --table my-table [--rate 100] [--region us-east-1] [--key AK...AA] [--secret 7a...IG]'
+           'Usage: dynamo-archive --table my-table [-v] [--rate 100] [--region us-east-1] [--key AK...AA] [--secret 7a...IG]'
 });
 
 delay = t => new Promise(resolve => { setTimeout(resolve, t) })
@@ -56,7 +56,7 @@ dynamo.describeTable({ TableName: argv.table }, (err, data) => {
                 }))
             }
         ).on('close', function() {
-            console.log(`Total promises: ${promises.length}`)
+            argv.v && console.log(`Total promises: ${promises.length}`)
 
             var batches = promises.reduce((set, promise) => {
                 var current = set.length - 1
@@ -71,13 +71,13 @@ dynamo.describeTable({ TableName: argv.table }, (err, data) => {
 
                     return delay(1000)
                         .then(() => Promise.all(batch.map(promise => promise())) )
-                        .then(() => { console.log(`Processed a batch with ${batch.length} items`) })
+                        .then(() => { argv.v && console.log(`Processed a batch with ${batch.length} items`) })
             })
 
-            console.log(`Processing ${promiseBatches.length} batches of promises, up to ${quota} promises each`)
+            argv.v && console.log(`Processing ${promiseBatches.length} batches of promises, up to ${quota} promises each`)
 
             Promise.series(promiseBatches, {}).then(() => {
-                console.log('All done, hooray!')
+                argv.v && console.log('All done, hooray!')
             }).catch(err => {
                 console.log(err)
             })
