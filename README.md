@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/yegor256/dynamo-archive.svg)](https://travis-ci.org/yegor256/dynamo-archive)
 [![NPM version](https://badge.fury.io/js/dynamo-archive.svg)](http://badge.fury.io/js/dynamo-archive)
-[![Dependency Status](https://gemnasium.com/yegor256/dynamo-archive.svg)](https://gemnasium.com/yegor256/dynamo-archive)
 
 There are two simple Node.js scripts that archive and restore an entire
 [AWS Dynamo DB](http://aws.amazon.com/dynamodb/)
