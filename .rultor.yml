@@ -10,13 +10,10 @@ release:
     sed -i "s/0.0.0/${tag}/g" package.json
     chmod 600 ../npmrc
     npm publish --userconfig=../npmrc
-  commanders:
-  - yegor256
-architect:
-- yegor256
-- davvd
 merge:
-  commanders: []
-  script: npm test
+  script: |-
+    npm test
 deploy:
-  script: npm test
+  script: |-
+    echo 'Nothing to deploy'
+    exit -1
