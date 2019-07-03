@@ -1,19 +1,16 @@
-[![Made By Teamed.io](http://img.teamed.io/btn.svg)](http://www.teamed.io)
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/dynamo-archive)](http://www.rultor.com/p/yegor256/dynamo-archive)
 
 [![Build Status](https://travis-ci.org/yegor256/dynamo-archive.svg)](https://travis-ci.org/yegor256/dynamo-archive)
 [![NPM version](https://badge.fury.io/js/dynamo-archive.svg)](http://badge.fury.io/js/dynamo-archive)
 [![Dependency Status](https://gemnasium.com/yegor256/dynamo-archive.svg)](https://gemnasium.com/yegor256/dynamo-archive)
 
-## Archive and Restore AWS Dynamo DB Table
-
 There are two simple Node.js scripts that archive and restore an entire
 [AWS Dynamo DB](http://aws.amazon.com/dynamodb/)
 table in JSON format.
 
 Install it first (I assume you have
-[node.js](http://nodejs.org/) and
-[npm](https://npmjs.org/doc/install.html) installed already):
+[Node.js](http://nodejs.org/) and
+[Npm](https://npmjs.org/doc/install.html) installed already):
 
 ```bash
 $ npm install dynamo-archive
@@ -70,11 +67,3 @@ do
   rm $t.json
 done
 ```
-
-## License
-
-Licensed under the Apache License, Version 2.0.
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/yegor256/dynamo-archive/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
