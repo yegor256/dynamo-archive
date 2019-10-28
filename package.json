@@ -7,9 +7,10 @@
   },
   "dependencies": {
     "aws-sdk": "2.5.x",
+    "dotenv": "0.4.x",
     "minimist": "1.1.x",
-    "sleep": "3.0.x",
-    "dotenv": "0.4.x"
+    "proxy-agent": "^2.0.0",
+    "sleep": "3.0.x"
   },
   "devDependencies": {
     "tape": "~2.13.2",
