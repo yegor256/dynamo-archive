@@ -1,6 +1,7 @@
 decrypt:
   npmrc: repo/npmrc.asc
-install: |
+install: |-
+  npm config set color false
   npm install
 release:
   script: |-
