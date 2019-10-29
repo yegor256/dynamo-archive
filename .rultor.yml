@@ -1,5 +1,5 @@
-decrypt:
-  npmrc: repo/npmrc.asc
+assets:
+  npmrc: yegor256/home#assets/npmrc
 install: |-
   npm config set color false
   npm install
