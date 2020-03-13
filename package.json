@@ -8,7 +8,7 @@
   "dependencies": {
     "aws-sdk": "2.5.x",
     "dotenv": "0.4.x",
-    "minimist": "1.1.x",
+    "minimist": "1.2.x",
     "proxy-agent": "^2.0.0",
     "sleep": "3.0.x"
   },
