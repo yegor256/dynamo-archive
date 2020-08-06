@@ -1,9 +1,19 @@
-language: nodejs
+language: node_js
+
+cache:
+  directories:
+    - "node_modules"
+
 branches:
   only:
     - master
+
 install:
   - npm install
+
 script:
   - npm test
 
+node_js:
+  - "6"
+  - "7"

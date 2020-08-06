@@ -20,48 +20,78 @@ var sleep = require('sleep');
 
 var argv = utils.config({
     demand: ['table'],
-    optional: ['rate', 'key', 'secret', 'region'],
+    optional: ['rate', 'key', 'secret', 'region', 'v'],
     usage: 'Restores Dynamo DB table from JSON file\n' +
-           'Usage: dynamo-archive --table my-table [--rate 100] [--region us-east-1] [--key AK...AA] [--secret 7a...IG]'
+           'Usage: dynamo-archive --table my-table [-v] [--rate 100] [--region us-east-1] [--key AK...AA] [--secret 7a...IG]'
 });
 
+delay = t => new Promise(resolve => { setTimeout(resolve, t) })
+
 var dynamo = utils.dynamo(argv);
-dynamo.describeTable(
-    {
-        TableName: argv.table
-    },
-    function (err, data) {
-        if (err != null) {
-            throw err;
-        }
-        if (data == null) {
-            throw 'Table ' + argv.table + ' not found in DynamoDB';
-        }
+
+dynamo.describeTable({ TableName: argv.table }, (err, data) => {
+        if (err != null) throw err
+        if (data == null) throw 'Table ' + argv.table + ' not found in DynamoDB'
+
         var quota = data.Table.ProvisionedThroughput.WriteCapacityUnits;
-        var start = Date.now();
-        var msecPerItem = Math.round(1000 / quota / ((argv.rate || 100) / 100));
-        var done = 0;
-        readline.createInterface(process.stdin, process.stdout).on(
+        var promises = []
+        var counter = 0
+
+        readline.createInterface({input: process.stdin, terminal: false, output: process.stdout}).on(
             'line',
-            function(line) {
-                dynamo.putItem(
-                    {
-                        TableName: argv.table,
-                        Item: JSON.parse(line)
-                    },
-                    function (err, data) {
-                        if (err) {
-                            console.log(err, err.stack);
-                            throw err;
+            line => {
+                promises.push(() => new Promise((resolve, reject) => {
+                    dynamo.putItem({
+                            TableName: argv.table,
+                            Item: JSON.parse(line)
+                        }, (err, data) => {
+                            if (err) {
+                                console.log(err, err.stack);
+                                return reject(err)
+                            }
+
+                            resolve()
                         }
-                    }
-                );
-                ++done;
-                var expected = start + msecPerItem * done;
-                if (expected > Date.now()) {
-                    sleep.usleep((expected - Date.now()) * 1000);
-                }
+                    );
+                }))
             }
-        );
+        ).on('close', function() {
+            argv.v && console.log(`Total promises: ${promises.length}`)
+
+            var batches = promises.reduce((set, promise) => {
+                var current = set.length - 1
+                set[current].push(promise)
+                if (set[current].length == quota) set.push([])
+
+                return set
+            }, [[]])
+
+            var promiseBatches = batches.map(batch => () => {
+                    if (batch.length == 0) return Promise.resolve()
+
+                    return delay(1000)
+                        .then(() => Promise.all(batch.map(promise => promise())) )
+                        .then(() => { argv.v && console.log(`Processed a batch with ${batch.length} items`) })
+            })
+
+            argv.v && console.log(`Processing ${promiseBatches.length} batches of promises, up to ${quota} promises each`)
+
+            Promise.series(promiseBatches, {}).then(() => {
+                argv.v && console.log('All done, hooray!')
+            }).catch(err => {
+                console.log(err)
+            })
+        });
     }
 );
+
+Promise.series = function(promises, initValue) {
+    return promises.reduce(function(chain, promise) {
+        if (typeof promise !== "function") {
+            return Promise.reject(
+                new Error("Error: Invalid promise item: " + promise)
+            )
+        }
+        return chain.then(promise)
+    }, Promise.resolve(initValue))
+}
