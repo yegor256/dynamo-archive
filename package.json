@@ -13,7 +13,7 @@
     "sleep": "6.3.x"
   },
   "devDependencies": {
-    "tape": "~2.13.2",
+    "tape": "~2.14.0",
     "faucet": "0.0.x",
     "dynalite": "0.19.x"
   },
