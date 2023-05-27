@@ -10,7 +10,7 @@
     "dotenv": "0.4.x",
     "minimist": "1.2.x",
     "proxy-agent": "^2.0.0",
-    "sleep": "3.0.x"
+    "sleep": "6.3.x"
   },
   "devDependencies": {
     "tape": "~2.13.2",

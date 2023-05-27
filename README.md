@@ -1,6 +1,5 @@
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/dynamo-archive)](http://www.rultor.com/p/yegor256/dynamo-archive)
 
-[![Build Status](https://travis-ci.org/yegor256/dynamo-archive.svg)](https://travis-ci.org/yegor256/dynamo-archive)
 [![NPM version](https://badge.fury.io/js/dynamo-archive.svg)](http://badge.fury.io/js/dynamo-archive)
 
 There are two simple Node.js scripts that archive and restore an entire
@@ -66,3 +65,16 @@ do
   rm $t.json
 done
 ```
+
+## How to contribute
+
+Read [these guidelines](https://www.yegor256.com/2014/04/15/github-guidelines.html).
+Make sure you build is green before you contribute
+your pull request. You will need to have NodeJS and installed. Then:
+
+```
+$ npm install
+$ npm test
+```
+
+If it's clean and you don't see any error messages, submit your pull request.
