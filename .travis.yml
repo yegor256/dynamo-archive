@@ -1,9 +1,0 @@
-language: nodejs
-branches:
-  only:
-    - master
-install:
-  - npm install
-script:
-  - npm test
-
