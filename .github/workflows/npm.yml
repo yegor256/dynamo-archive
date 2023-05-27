@@ -12,12 +12,12 @@ jobs:
     name: test
     strategy:
       matrix:
-        os: [ubuntu-20.04, macos-12]
+        os: [ubuntu-20.04, macos-12, windows-2022]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: '12.x'
-      - run: npm install
-      - run: npm test
+      - run: npm install --no-color
+      - run: npm test --no-color
