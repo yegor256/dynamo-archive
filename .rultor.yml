@@ -3,16 +3,15 @@ docker:
 assets:
   npmrc: yegor256/home#assets/npmrc
 install: |-
-  npm config set color false
-  npm install
+  npm install --no-color
 release:
   script: |-
     node --version
     npm -version
-    npm test
+    npm test --no-color
     sed -i "s/0.0.0/${tag}/g" package.json
     chmod 600 ../npmrc
-    npm publish --userconfig=../npmrc
+    npm publish --no-color --userconfig=../npmrc
 merge:
   script: |-
-    npm test
+    npm test --no-color
