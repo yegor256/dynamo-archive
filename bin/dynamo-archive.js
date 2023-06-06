@@ -68,10 +68,11 @@ dynamo.describeTable(
         if (data == null) {
             throw 'Table ' + argv.table + ' not found in DynamoDB';
         }
+        const rcu = data.Table.ProvisionedThroughput.ReadCapacityUnits;
         var params = {
             TableName: argv.table,
             ReturnConsumedCapacity: 'NONE',
-            Limit: data.Table.ProvisionedThroughput.ReadCapacityUnits
+            Limit: rcu > 0 ? rcu : 1000
         };
         if (argv.index) {
             params.IndexName = argv.index
