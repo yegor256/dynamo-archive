@@ -12,7 +12,7 @@ Install it first (I assume you have
 [Npm](https://npmjs.org/doc/install.html) installed already):
 
 ```bash
-$ npm install dynamo-archive
+$ npm install -g dynamo-archive
 ```
 
 Create a user in [Amazon IAM](http://aws.amazon.com/iam/)
@@ -37,13 +37,13 @@ access to all tables).
 Run it first without arguments and read the output:
 
 ```bash
-$ ./bin/dynamo-archive.js
+$ dynamo-archive.js
 ```
 
 To restore a table from a JSON file run:
 
 ```bash
-$ ./bin/dynamo-restore.js
+$ dynamo-restore.js
 ```
 
 ## Crontab automation
