@@ -1,6 +1,6 @@
 ---
 name: npm
-on:
+'on':
   push:
     branches:
       - master
