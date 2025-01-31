@@ -5,6 +5,7 @@ assets:
 install: |-
   npm install --no-color
 release:
+  pre: false
   script: |-
     node --version
     npm -version

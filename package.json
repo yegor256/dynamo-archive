@@ -1,9 +1,11 @@
 {
-  "name": "dynamo-archive",
-  "version": "0.0.0",
-  "description": "Backup DynamoDB tables to JSON files",
-  "scripts": {
-    "test": "tape test/archive.test.js | faucet"
+  "author": "Yegor Bugayenko",
+  "bin": {
+    "dynamo-archive": "bin/dynamo-archive.js",
+    "dynamo-restore": "bin/dynamo-restore.js"
+  },
+  "bugs": {
+    "url": "https://github.com/yegor256/dynamo-archive/issues"
   },
   "dependencies": {
     "aws-sdk": "2.814.x",
@@ -12,19 +14,13 @@
     "proxy-agent": "^2.0.0",
     "sleep": "6.3.x"
   },
+  "description": "Backup DynamoDB tables to JSON files",
   "devDependencies": {
-    "tape": "~2.14.0",
+    "dynalite": "3.2.x",
     "faucet": "0.0.x",
-    "dynalite": "3.2.x"
+    "tape": "~2.14.0"
   },
-  "bin": {
-    "dynamo-archive": "bin/dynamo-archive.js",
-    "dynamo-restore": "bin/dynamo-restore.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/yegor256/dynamo-archive.git"
-  },
+  "homepage": "https://github.com/yegor256/dynamo-archive",
   "keywords": [
     "AWS",
     "DynamoDB",
@@ -32,10 +28,14 @@
     "import",
     "achive"
   ],
-  "author": "Yegor Bugayenko",
   "license": "Apache",
-  "bugs": {
-    "url": "https://github.com/yegor256/dynamo-archive/issues"
+  "name": "dynamo-archive",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/yegor256/dynamo-archive.git"
   },
-  "homepage": "https://github.com/yegor256/dynamo-archive"
+  "scripts": {
+    "test": "tape test/archive.test.js | faucet"
+  },
+  "version": "0.0.0"
 }

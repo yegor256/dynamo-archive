@@ -91,27 +91,27 @@ tests.push(['Export archive with query', function (t, opts, done) {
             endpoint: new aws.Endpoint(opts.env.AWS_DYNAMODB_ENDPOINT)
         });
         var params = {
-          AttributeDefinitions: [ 
+          AttributeDefinitions: [
             {
-              AttributeName: 'Name', 
-              AttributeType: 'S', 
+              AttributeName: 'Name',
+              AttributeType: 'S',
             },
             {
-              AttributeName: 'Value', 
-              AttributeType: 'N', 
+              AttributeName: 'Value',
+              AttributeType: 'N',
             }
           ],
-          KeySchema: [ 
+          KeySchema: [
             {
-              AttributeName: 'Name', 
-              KeyType: 'HASH', 
+              AttributeName: 'Name',
+              KeyType: 'HASH',
             },
             {
-              AttributeName: 'Value', 
-              KeyType: 'RANGE', 
+              AttributeName: 'Value',
+              KeyType: 'RANGE',
             }
           ],
-          ProvisionedThroughput: { 
+          ProvisionedThroughput: {
             ReadCapacityUnits: 10,
             WriteCapacityUnits: 10
           },

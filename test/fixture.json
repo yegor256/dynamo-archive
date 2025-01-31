@@ -1,4 +1,34 @@
-{"Name":{"S":"foo"},"Value":{"N":"5"}}
-{"Name":{"S":"foo"},"Value":{"N":"24"}}
-{"Name":{"S":"bar"},"Value":{"N":"9"}}
-{"Name":{"S":"baz"},"Value":{"N":"300"}}
+[
+  {
+    "Name": {
+      "S": "foo"
+    },
+    "Value": {
+      "N": "5"
+    }
+  },
+  {
+    "Name": {
+      "S": "foo"
+    },
+    "Value": {
+      "N": "24"
+    }
+  },
+  {
+    "Name": {
+      "S": "bar"
+    },
+    "Value": {
+      "N": "9"
+    }
+  },
+  {
+    "Name": {
+      "S": "baz"
+    },
+    "Value": {
+      "N": "300"
+    }
+  }
+]
