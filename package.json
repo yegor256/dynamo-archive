@@ -18,7 +18,7 @@
   "devDependencies": {
     "dynalite": "3.2.x",
     "faucet": "0.0.x",
-    "tape": "~2.14.0"
+    "tape": "~5.9.0"
   },
   "homepage": "https://github.com/yegor256/dynamo-archive",
   "keywords": [
