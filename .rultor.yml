@@ -11,6 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
+# yamllint disable rule:line-length
 docker:
   image: yegor256/rultor-image:1.19.0
 assets:
