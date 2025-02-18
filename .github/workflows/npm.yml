@@ -11,6 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
+# yamllint disable rule:line-length
 name: npm
 'on':
   push:
