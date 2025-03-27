@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: Copyright (c) 2013-2025 Yegor Bugayenko
+// SPDX-License-Identifier: MIT
+
 var path = require('path');
 var test = require('tape').test
 var dynalite = require('dynalite');
