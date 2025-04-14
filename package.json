@@ -8,7 +8,7 @@
     "url": "https://github.com/yegor256/dynamo-archive/issues"
   },
   "dependencies": {
-    "aws-sdk": "2.814.x",
+    "aws-sdk": "2.1692.x",
     "dotenv": "0.5.x",
     "minimist": "1.2.x",
     "proxy-agent": "^2.0.0",
