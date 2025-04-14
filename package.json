@@ -11,7 +11,7 @@
     "aws-sdk": "2.814.x",
     "dotenv": "0.5.x",
     "minimist": "1.2.x",
-    "proxy-agent": "^2.0.0",
+    "proxy-agent": "^6.0.0",
     "sleep": "6.3.x"
   },
   "description": "Backup DynamoDB tables to JSON files",
