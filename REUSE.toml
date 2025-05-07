@@ -6,8 +6,8 @@ version = 1
 path = [
     ".DS_Store",
     ".gitattributes",
-    ".npmignore",
     ".gitignore",
+    ".npmignore",
     "**.json",
     "**.md",
     "**.txt",
