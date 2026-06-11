@@ -16,7 +16,7 @@
   },
   "description": "Backup DynamoDB tables to JSON files",
   "devDependencies": {
-    "dynalite": "3.2.x",
+    "dynalite": "4.0.x",
     "faucet": "0.0.x",
     "tape": "~2.14.0"
   },
