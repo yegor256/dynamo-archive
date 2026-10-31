@@ -1,3 +1,5 @@
+# Archive and Restore AWS DynamoDB Tables
+
 [![DevOps By Rultor.com](https://www.rultor.com/b/yegor256/dynamo-archive)](https://www.rultor.com/p/yegor256/dynamo-archive)
 
 [![npm](https://github.com/yegor256/dynamo-archive/actions/workflows/npm.yml/badge.svg)](https://github.com/yegor256/dynamo-archive/actions/workflows/npm.yml)
@@ -12,7 +14,7 @@ Install it first (I assume you have
 [Npm](https://npmjs.org/doc/install.html) installed already):
 
 ```bash
-$ npm install -g dynamo-archive
+npm install -g dynamo-archive
 ```
 
 Create a user in [Amazon IAM](http://aws.amazon.com/iam/)
@@ -37,13 +39,13 @@ access to all tables).
 Run it first without arguments and read the output:
 
 ```bash
-$ dynamo-archive.js
+dynamo-archive.js
 ```
 
 To restore a table from a JSON file run:
 
 ```bash
-$ dynamo-restore.js
+dynamo-restore.js
 ```
 
 ## Crontab automation
@@ -73,9 +75,9 @@ Read [these guidelines](https://www.yegor256.com/2014/04/15/github-guidelines.ht
 Make sure your build is green before you contribute
 your pull request. You will need to have NodeJS and installed. Then:
 
-```
-$ npm install
-$ npm test
+```bash
+npm install
+npm test
 ```
 
 If it's clean and you don't see any error messages, submit your pull request.
