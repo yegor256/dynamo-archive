@@ -11,7 +11,7 @@ var tests = [];
 
 tests.push(['Load archive', function (t, opts, done) {
     t.plan(3);
-    var fixture = path.join(__dirname, 'fixture.json');
+    var fixture = path.join(__dirname, 'fixture.jsonl');
     var cmd = './dynamo-restore.js --table testing-table < '+fixture;
     exec(cmd, opts, function(err, stdout, stderr) {
         t.notOk(err, 'Exit cleanly');
