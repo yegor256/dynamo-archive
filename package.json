@@ -8,17 +8,17 @@
     "url": "https://github.com/yegor256/dynamo-archive/issues"
   },
   "dependencies": {
-    "aws-sdk": "2.814.x",
+    "aws-sdk": "2.1693.x",
     "dotenv": "18.0.x",
     "minimist": "1.2.x",
-    "proxy-agent": "^2.0.0",
+    "proxy-agent": "^8.0.0",
     "sleep": "6.3.x"
   },
   "description": "Backup DynamoDB tables to JSON files",
   "devDependencies": {
-    "dynalite": "3.2.x",
+    "dynalite": "4.0.x",
     "faucet": "0.0.x",
-    "tape": "~2.14.0"
+    "tape": "~5.10.0"
   },
   "homepage": "https://github.com/yegor256/dynamo-archive",
   "keywords": [
