@@ -35,7 +35,7 @@
     "url": "git://github.com/yegor256/dynamo-archive.git"
   },
   "scripts": {
-    "test": "tape test/archive.test.js | faucet"
+    "test": "node test/archive.test.js | faucet"
   },
   "version": "0.0.0"
 }
